@@ -1,6 +1,5 @@
-package com.example.newmarvelcompose.repository
+package com.example.newmarvelcompose.domain
 
-import android.util.Log
 import com.example.newmarvelcompose.data.local.MarvelDAO
 import com.example.newmarvelcompose.data.local.RoomResponse
 import com.example.newmarvelcompose.data.models.MarvelRoom
