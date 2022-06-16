@@ -5,12 +5,16 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.example.newmarvelcompose.data.local.MarvelDAO
+import com.example.newmarvelcompose.data.local.RoomResponse
 import com.example.newmarvelcompose.data.remote.MarvelApi
+import com.example.newmarvelcompose.data.remote.response.marvel.CharacterDataContainerResponse
+import com.example.newmarvelcompose.data.remote.response.marvel.CharacterResultResponse
 import com.example.newmarvelcompose.data.remote.response.marvel.ComicCharacterResponse
 import com.example.newmarvelcompose.data.remote.response.marvel.ThumbnailResponse
 import com.example.newmarvelcompose.repository.MarvelRepository
 import com.example.newmarvelcompose.repository.MarvelRepository_Factory
 import com.example.newmarvelcompose.util.WrapperResponse
+import com.example.newmarvelcompose.util.convertPixelsToDp
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Assert.assertEquals
@@ -40,16 +44,39 @@ class MarvelRepositoryTest {
 
     private lateinit var repository: MarvelRepository
 
-    private val hero = ComicCharacterResponse(
-        id = 1,
-        name = "Spiderman",
-        description = "Super human with spider power's",
-        modified = "modified example",
-        resourceUri = "resourceUriExample",
-        thumbnailResponse = ThumbnailResponse(
-            path =
+    private val hero = CharacterResultResponse(
+        code = 200,
+        status = "OK",
+        copyright = "© 2022 MARVEL",
+        attributionText = "Data provided by Marvel. © 2022 MARVEL",
+            CharacterDataContainerResponse(
+                offset = 0,
+                limit = 20,
+                total = 1,
+                count = 1,
+                listOf(
+                    ComicCharacterResponse(
+                        id = 1017100,
+                        name = "A-Bomb (HAS)",
+                        description = "Rick Jones has been Hulk's best bud since day one, but now he's more than a friend...he's a teammate! Transformed by a Gamma energy explosion, A-Bomb's thick, armored skin is just as strong and powerful as it is blue. And when he curls into action, he uses it like a giant bowling ball of destruction! ",
+                        modified = "2013-09-18T15:54:04-0400",
+                        thumbnailResponse = ThumbnailResponse(
+                            path = "http://i.annihil.us/u/prod/marvel/i/mg/3/20/5232158de5b16",
+                            extension = "jpg"
+                        ),
+                        resourceUri = "http://gateway.marvel.com/v1/public/characters/1017100"
+                    )
+                )
+            )
         )
-        )
+    private val heroBought = RoomResponse(
+        uid = "1017100",
+        name = "A-Bomb (HAS)",
+        image = "http://i.annihil.us/u/prod/marvel/i/mg/3/20/5232158de5b16.jpg",
+        numberId = 1017100,
+        bought = 1,
+        description = "Rick Jones has been Hulk's best bud since day one, but now he's more than a friend...he's a teammate! Transformed by a Gamma energy explosion, A-Bomb's thick, armored skin is just as strong and powerful as it is blue. And when he curls into action, he uses it like a giant bowling ball of destruction! "
+    )
 
     @Before
     fun setup(){
@@ -61,46 +88,28 @@ class MarvelRepositoryTest {
     fun getAllCountriesFromNetwork() = runBlocking{
         Assert.assertNotNull(mockDao)
         Assert.assertNotNull(mockApi)
-        Mockito.`when`(mockDao.getAllCountries()).thenReturn(listOf())
-        Mockito.`when`(mockApi.getAllCountries()).thenReturn(Response.success(listOf(country)))
+        Mockito.`when`(mockDao.selectHeroBought()).thenReturn(listOf())
+        Mockito.`when`(mockApi.getCharacters(20, 20)).thenReturn(hero)
 
-        val result = repository.getAllCountries() as AppResult.Success<List<Country>>
+        val result = repository.getHeroList(20, 20) as WrapperResponse.Sucess<List<CharacterResultResponse>>
 
-        Assert.assertEquals(1, result.successData.size)
-        Assert.assertEquals(country.name, result.successData[0].name)
+        Assert.assertEquals(1, result.data?.size)
+        Assert.assertEquals(hero.dataResponse.results[0].name, result.data?.get(0)?.dataResponse!!.results[0].name)
     }
 
-    @Test
-    fun getAllCountriesFromDatabase() = runBlocking {
-        Assert.assertNotNull(mockDao)
-        Mockito.`when`(mockDao.getAllCountries()).thenReturn(listOf(country))
+    //TODO(): Test LocalDatabase
 
-        val result = repository.getAllCountries() as AppResult.Success<List<Country>>
-
-        Assert.assertEquals(1, result.successData.size)
-        Assert.assertEquals(country.name, result.successData[0].name)
-    }
 
     @Test
-    fun updateFavourite() = runBlocking{
+    fun getBought() = runBlocking {
         Assert.assertNotNull(mockDao)
-        Mockito.`when`(mockDao.updateFavourite(any(Int::class.java), any(Boolean::class.java)))
+        heroBought.bought = 1
+        Mockito.`when`(mockDao.selectHeroBought(1)).thenReturn(listOf(heroBought))
 
-        val result = repository.updateFavourite(1, true) as AppResult.Success<Boolean>
+        val result = mockDao.selectHeroBought(1) as WrapperResponse.Sucess<List<RoomResponse>>
 
-        Assert.assertTrue(result.successData)
-    }
-
-    @Test
-    fun getFavourites() = runBlocking {
-        Assert.assertNotNull(mockDao)
-        country.isFavourite = true
-        Mockito.`when`(mockDao.getFavourites(any(Boolean::class.java))).thenReturn(listOf(country))
-
-        val result = repository.getFavourites() as WrapperResponse.Success<List<Country>>
-
-        Assert.assertEquals(1, result.successData.size)
-        Assert.assertEquals(country.name, result.successData[0].name)
-        Assert.assertTrue(result.successData[0].isFavourite)
+        Assert.assertEquals(1, result.data?.size)
+        Assert.assertEquals(heroBought.name, result.data!![0].name)
+        Assert.assertEquals(result.data!![0].bought, 1)
     }
 }

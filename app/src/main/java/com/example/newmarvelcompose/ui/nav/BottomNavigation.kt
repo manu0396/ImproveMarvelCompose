@@ -16,9 +16,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
 fun BottomNavigationBar(heightBottomBar: Int, navController: NavController) {
-    Log.d("navigation", "navigatorName: ${navController.currentBackStackEntry?.destination?.navigatorName}")
-    Log.d("navigation", "displayName: ${navController.currentBackStackEntry?.destination?.displayName}")
-    Log.d("navigation", "arguments: ${navController.currentBackStackEntry?.arguments}")
 
     val items = listOf(
             BottomNavItem.ListScreen,

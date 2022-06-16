@@ -62,27 +62,25 @@ class MyHerosViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.value = true
             var result = localRepository.selectLocalHeros()
-            Log.d("db", "result selectLocalPokemons: ${result.data} ${result.message}")
 
             when (result) {
                 is WrapperResponse.Sucess -> {
-                    Log.d("pokemon", "Entra en WrapperResponse.Sucess")
+
                 val pokedexBought = result.data!!.map {
                         RoomResponse(
                             uid = it.uid,
                             name = it.name,
                             image = it.image,
                             numberId = it.numberId,
-                            bought = it.bought
+                            bought = it.bought,
+                            description = it.description
                         )
                     }
                     _loadError.value = ""
                     _isLoading.value = false
                     _heroBoughtList.value = pokedexBought
-                    Log.d("pokemon", "pokemonBougtList: ${_heroBoughtList.value}")
                 }
                 is WrapperResponse.Error -> {
-                    Log.d("pokemon", "Entra en WrapperResponse.Error")
                     _loadError.value = result.message.toString()
                     _isLoading.value = false
                     }
@@ -100,7 +98,7 @@ class MyHerosViewModel @Inject constructor(
 
     fun removeHero(heroToRemove: String) = runBlocking(Dispatchers.IO){
         _isLoading.value = true
-        val resp = localRepository.removeHero(pokemonToRemove = heroToRemove)
+        val resp = localRepository.removeHero(heroToRemove = heroToRemove)
 
         when(resp){
             is WrapperResponse.Sucess -> {
@@ -110,7 +108,7 @@ class MyHerosViewModel @Inject constructor(
                     _loadError.value = ""
                     _isLoading.value = false
                 }else{
-                    _loadError.value = "No se ha podido eliminar el pokemon seleccionado"
+                    _loadError.value = "No se ha podido eliminar el hero seleccionado"
                     _isLoading.value = false
                 }
             }

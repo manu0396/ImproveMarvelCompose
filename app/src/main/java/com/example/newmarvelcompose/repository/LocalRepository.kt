@@ -21,9 +21,9 @@ class LocalRepository @Inject constructor(val dao: MarvelDAO) {
         }
         return@runBlocking WrapperResponse.Sucess(response)
     }
-    fun removeHero(pokemonToRemove: String): WrapperResponse<Int> = runBlocking(Dispatchers.IO){
+    fun removeHero(heroToRemove: String): WrapperResponse<Int> = runBlocking(Dispatchers.IO){
         val response = try{
-            dao.removeHero(pokemonToRemove)
+            dao.removeHero(heroToRemove)
         }catch (ex:Exception){
             return@runBlocking WrapperResponse.Error("Connection to localDatabase failed: Delete")
         }
@@ -36,7 +36,6 @@ class LocalRepository @Inject constructor(val dao: MarvelDAO) {
         }catch (ex:Exception){
             return@runBlocking WrapperResponse.Error("Connection to localDatabase failed: Select")
         }
-        Log.d("pokemon", "list en LocalRepository: ${response} size ${response.size}")
 
         return@runBlocking WrapperResponse.Sucess(response)
     }

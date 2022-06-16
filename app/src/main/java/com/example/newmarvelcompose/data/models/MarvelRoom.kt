@@ -14,5 +14,6 @@ data class MarvelRoom(
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "image") val image:String,
     @ColumnInfo(name = "numberId") val numberId: Int,
-    @ColumnInfo(name = "bought") var bought: Int = 0
+    @ColumnInfo(name = "bought") var bought: Int = 0,
+    @ColumnInfo(name = "description") var description: String
 )

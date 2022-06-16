@@ -231,7 +231,7 @@ class MainActivity : ComponentActivity() {
             Log.d("BillingName", billingName)
 
             if(marvelBought!!.bought == 1){
-                Toast.makeText(this, "You already have that pokemon. Try to buy another.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "You already have that hero. Try to buy another.", Toast.LENGTH_LONG).show()
             }else{
                 Toast.makeText(this, "Succesful payment for ${marvelBought!!.name} by $billingName", Toast.LENGTH_LONG).show()
                 marvelBought?.bought = 1
@@ -239,11 +239,11 @@ class MainActivity : ComponentActivity() {
                 when(resp){
                     is WrapperResponse.Sucess ->{
                         if(!resp.equals(-1)){
-                            Log.d("Insert", "Inserta el pokemon localmente")
+                            Log.d("Insert", "Inserta el hero localmente")
                         }
                     }
                     is WrapperResponse.Error ->{
-                        Log.d("Insert", "Falla al insertar el pokemon")
+                        Log.d("Insert", "Falla al insertar el hero")
                     }
                 }
             }

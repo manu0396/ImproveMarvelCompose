@@ -56,7 +56,6 @@ fun HeroDetailScreen(
 ) {
     LaunchedEffect(key1 = heroNumber) {
         viewModel.getHeroInfo(heroNumber)
-        Log.d("http", "call LaunchEffect")
     }
     val heroInfo by viewModel.hero.collectAsState()
 
@@ -243,7 +242,8 @@ fun HeroDetailTopSection(
                                     numberId = heroInfo!!.id,
                                     name = heroInfo?.name!!,
                                     image = "${heroInfo?.thumbnail}",
-                                    bought = 0
+                                    bought = 0,
+                                    description = heroInfo.description
                                 )
                             )
                         }
@@ -253,7 +253,7 @@ fun HeroDetailTopSection(
             modifier = Modifier
                 .size(1.dp, 80.dp)
                 .background(Color.LightGray)
-        )
+                )
             }
         }
 
@@ -298,7 +298,17 @@ fun HeroDetailSection(
         Spacer(
             modifier = Modifier
                 .size(1.dp, 20.dp)
-                .background(Color.LightGray)
+        )
+        Text(
+            text = "${heroInfo.description.capitalize(Locale.ROOT)}",
+            fontWeight = FontWeight.Thin,
+            fontSize = 10.sp,
+            textAlign = TextAlign.Center,
+            color = Color.White,
+        )
+        Spacer(
+            modifier = Modifier
+                .size(1.dp, 20.dp)
         )
     }
 }

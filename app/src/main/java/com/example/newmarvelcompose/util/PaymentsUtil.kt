@@ -190,7 +190,7 @@ object PaymentsUtil {
     //Carga de la información del comercianciante para el pago.
     private val merchantInfo: JSONObject
         @Throws(JSONException::class)
-        get() = JSONObject().put("merchantName", "Pokemon Store")
+        get() = JSONObject().put("merchantName", "hero Store")
 
     /**
      * Creates an instance of [PaymentsClient] for use in an [Activity] using the

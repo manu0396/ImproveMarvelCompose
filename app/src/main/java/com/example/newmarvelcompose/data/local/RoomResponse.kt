@@ -5,5 +5,6 @@ data class RoomResponse(
     val name: String,
     val image: String,
     val numberId: Int,
-    val bought: Int
+    val description: String,
+    var bought: Int
 )

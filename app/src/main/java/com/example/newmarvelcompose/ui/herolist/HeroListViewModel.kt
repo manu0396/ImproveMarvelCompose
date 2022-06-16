@@ -47,7 +47,7 @@ class HeroListViewModel @Inject constructor(
         loadHeroPaginated()
     }
 
-    fun searchPokemonList(query: String) {
+    fun searchheroList(query: String) {
         val listToSearch = if (isSearchStarting) {
             _heroList.value
         } else {
@@ -85,7 +85,6 @@ class HeroListViewModel @Inject constructor(
         viewModelScope.launch {
             _isLoading.value = true
             val result = repository.getHeroList(PAGE_SIZE, offset = curPage * PAGE_SIZE)
-            Log.d("http", "Result of loadHeroPagnated: $result")
             when (result) {
                 is WrapperResponse.Sucess -> {
                     _endReached.value = curPage * PAGE_SIZE >= result.data!!.count

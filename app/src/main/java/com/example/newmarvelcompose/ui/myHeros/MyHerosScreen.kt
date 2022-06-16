@@ -108,7 +108,6 @@ fun HeroListRoom(
     val heroList by viewModel.heroBoughtList.collectAsState()
     val loadError by viewModel.loadError.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
-    Log.d("http", "heroList: ${heroList.size}")
 
     val height = Resources.getSystem().displayMetrics.heightPixels
     val heightDp = convertPixelsToDp(px = height/2, context = context)
@@ -263,7 +262,6 @@ fun HeroRoomEntry(
     ) {
         val showDialogState: Boolean by viewModel.showDialog.collectAsState()
         if(showDialogState){
-            Log.d("pokemon", "pokemon to remove ${viewModel.heroToDelete.value}")
 
             SimpleAlertDialog(
                 hero = viewModel.heroToDelete.value,
@@ -315,7 +313,6 @@ fun HeroRoomEntry(
                 }
             )
 
-            Log.d("herolist", entry.image)
             Text(
                 text = entry.name.split("(")[0],
                 fontFamily = RobotoCondensed,
@@ -332,7 +329,7 @@ fun HeroRoomEntry(
     }
 }
 
-//At the begining is invisible and show when the user try to remove some pokemon.
+//At the begining is invisible and show when the user try to remove some hero.
 @Composable
 fun SimpleAlertDialog(
     hero: String,

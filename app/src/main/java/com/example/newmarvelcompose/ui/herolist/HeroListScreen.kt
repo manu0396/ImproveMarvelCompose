@@ -72,7 +72,7 @@ fun HeroListScreen(
 
             ) {
 
-                viewModel.searchPokemonList(it)
+                viewModel.searchheroList(it)
 
             }
 
@@ -211,7 +211,6 @@ fun HeroEntry(
             }
 
     ) {
-        Log.d("http", "image url: ${model.thumbnail}")
         Column {
             CoilImage(
                 imageRequest = ImageRequest.Builder(LocalContext.current)
@@ -253,7 +252,6 @@ fun HeroEntry(
                 }
             )
 
-            Log.d("pokemonlist", model.thumbnail)
             Text(
                 text = model.name.split("(")[0],
                 fontFamily = RobotoCondensed,

@@ -14,6 +14,6 @@ interface MarvelDAO {
     fun selectHeroBought(bought: Int = 1): List<RoomResponse>
 
     //Return the number of rows delete
-    @Query("DELETE FROM ${Constants.DATABASE_NAME} WHERE name=:pokemonName")
-    fun removeHero(pokemonName: String): Int
+    @Query("DELETE FROM ${Constants.DATABASE_NAME} WHERE name=:name")
+    fun removeHero(name: String): Int
 }

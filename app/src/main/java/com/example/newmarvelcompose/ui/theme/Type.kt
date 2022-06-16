@@ -19,12 +19,7 @@ val RobotoCondensed = FontFamily(
     Font(R.font.roboto_condensed_light, FontWeight.Light),
     Font(R.font.roboto_condensed_regular, FontWeight.Normal),
 )
-val PokemonSolidFont = FontFamily(
-    Font(R.font.pokemon_solid, FontWeight.W900)
-)
-val pokemonHollowFont = FontFamily(
-    Font(R.font.pokemon_hollow, FontWeight.W900)
-)
+
 
 // Set of Material typography styles to start with
 val Typography = Typography(
