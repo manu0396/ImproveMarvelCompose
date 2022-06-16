@@ -71,19 +71,15 @@ class MainActivity : ComponentActivity() {
             val bottomBarState = rememberSaveable { mutableStateOf(true)} // Variable to manage visibility of the bottomBar
             // Subscribe to navBackStackEntry, required to get current route
             val navBackStackEntry by navController.currentBackStackEntryAsState()
-            Log.d("nav", "navBackStackEntry?.destination?.route: ${navBackStackEntry?.destination?.route}")
             when(navBackStackEntry?.destination?.route){
 
                 "list_screen" -> {
-                    Log.d("nav", "Entra en list_screen")
                     bottomBarState.value = false
                 }
                 "bought_screen" ->{
-                    Log.d("nav", "Entra en bought_screen")
                     bottomBarState.value = true
                 }
                 "detail_screen/{dominantColor}/{number}" ->{
-                    Log.d("nav", "Entra en detail_screen")
                     bottomBarState.value = true
                 }
             }
