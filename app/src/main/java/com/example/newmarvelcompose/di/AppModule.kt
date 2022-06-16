@@ -2,7 +2,7 @@ package com.example.newmarvelcompose.di
 
 import com.example.newmarvelcompose.BuildConfig
 import com.example.newmarvelcompose.data.remote.MarvelApi
-import com.example.newmarvelcompose.domain.MarvelRepository
+import com.example.newmarvelcompose.domain.MarvelRepositoryImpl
 import com.example.newmarvelcompose.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -55,7 +55,7 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideMarvelRepository(api: MarvelApi) = MarvelRepository(api)
+    fun provideMarvelRepository(api: MarvelApi) = MarvelRepositoryImpl(api)
 
     @Provides
     @Singleton

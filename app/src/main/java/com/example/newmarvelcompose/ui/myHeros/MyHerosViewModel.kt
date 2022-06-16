@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.palette.graphics.Palette
 import com.example.newmarvelcompose.data.local.RoomResponse
-import com.example.newmarvelcompose.domain.LocalRepository
+import com.example.newmarvelcompose.domain.LocalRepositoryImpl
 import com.example.newmarvelcompose.util.WrapperResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyHerosViewModel @Inject constructor(
-    val localRepository: LocalRepository
+    val localRepositoryImpl: LocalRepositoryImpl
 ):
     ViewModel() {
 
@@ -60,7 +60,7 @@ class MyHerosViewModel @Inject constructor(
     fun getHerosBought() {
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.value = true
-            var result = localRepository.selectLocalHeros()
+            var result = localRepositoryImpl.selectLocalHeros()
 
             when (result) {
                 is WrapperResponse.Sucess -> {
@@ -97,7 +97,7 @@ class MyHerosViewModel @Inject constructor(
 
     fun removeHero(heroToRemove: String) = runBlocking(Dispatchers.IO){
         _isLoading.value = true
-        val resp = localRepository.removeHero(heroToRemove = heroToRemove)
+        val resp = localRepositoryImpl.removeHero(heroToRemove = heroToRemove)
 
         when(resp){
             is WrapperResponse.Sucess -> {

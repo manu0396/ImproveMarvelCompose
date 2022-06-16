@@ -10,7 +10,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.palette.graphics.Palette
 import com.example.newmarvelcompose.data.models.MarvelListModel
 import com.example.newmarvelcompose.data.remote.mapper.MarvelMapper
-import com.example.newmarvelcompose.domain.MarvelRepository
+import com.example.newmarvelcompose.domain.MarvelRepositoryImpl
 import com.example.newmarvelcompose.util.Constants.PAGE_SIZE
 import com.example.newmarvelcompose.util.WrapperResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +23,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HeroListViewModel @Inject constructor(
-    private val repository: MarvelRepository
+    private val repositoryImpl: MarvelRepositoryImpl
 ) : ViewModel() {
 
     private var curPage = 0
@@ -83,7 +83,7 @@ class HeroListViewModel @Inject constructor(
 
         viewModelScope.launch {
             _isLoading.value = true
-            val result = repository.getHeroList(PAGE_SIZE, offset = curPage * PAGE_SIZE)
+            val result = repositoryImpl.getHeroList(PAGE_SIZE, offset = curPage * PAGE_SIZE)
             when (result) {
                 is WrapperResponse.Sucess -> {
                     _endReached.value = curPage * PAGE_SIZE >= result.data!!.count

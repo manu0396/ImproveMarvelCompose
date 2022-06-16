@@ -9,6 +9,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -52,7 +54,7 @@ fun HeroListScreen(
     Surface(
         color = MaterialTheme.colors.background,
         modifier = Modifier.fillMaxSize()
-    )
+        )
     {
         Column {
             Spacer(modifier = Modifier.height(20.dp))
@@ -144,8 +146,9 @@ fun HeroList(
     val isLoading by viewModel.isLoading.collectAsState()
     val isSearching by remember { viewModel.isSearching }
 
+    val listState = rememberLazyListState()
 
-    LazyColumn(contentPadding = PaddingValues(16.dp)) {
+    LazyColumn(state = listState, contentPadding = PaddingValues(16.dp)) {
 
         val itemCount = if (heroList.size % 2 == 0) {
             heroList.size / 2
@@ -160,7 +163,12 @@ fun HeroList(
             HeroRow(rowIndex = it, models = heroList, navController = navController, viewModel = viewModel)
         }
     }
-
+    /**
+     * Function which call the infinate scroll
+     */
+    listState.OnBottomReached {
+        viewModel.loadHeroPaginated()
+    }
 
     Box(
         contentAlignment = Center,
@@ -318,5 +326,29 @@ fun RetrySection(
     }
 }
 
+/**
+ * Component which allow infiniteScroll
+ */
+@Composable
+fun LazyListState.OnBottomReached(
+    loadMore : () -> Unit
+){
+    val shouldLoadMore = remember {
+        derivedStateOf {
+            val lastVisibleItem = layoutInfo.visibleItemsInfo.lastOrNull()
+                ?: return@derivedStateOf true
 
+            lastVisibleItem.index == layoutInfo.totalItemsCount - 1
+        }
+    }
+
+    // Convert the state into a cold flow and collect
+    LaunchedEffect(shouldLoadMore){
+        snapshotFlow { shouldLoadMore.value }
+            .collect {
+                // if should load more, then invoke loadMore
+                if (it) loadMore()
+            }
+    }
+}
 

@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.newmarvelcompose.data.models.MarvelListModel
 import com.example.newmarvelcompose.data.remote.mapper.MarvelMapper
 import com.example.newmarvelcompose.util.WrapperResponse
-import com.example.newmarvelcompose.domain.MarvelRepository
+import com.example.newmarvelcompose.domain.MarvelRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HeroDetailViewModel @Inject constructor(
-    private val repository: MarvelRepository
+    private val repositoryImpl: MarvelRepositoryImpl
 ): ViewModel() {
 
     private var _loadError : MutableStateFlow<String> = MutableStateFlow("")
@@ -29,7 +29,7 @@ class HeroDetailViewModel @Inject constructor(
 
         viewModelScope.launch {
             _isLoading.value = true
-            val resp = repository.getHeroInfo(id)
+            val resp = repositoryImpl.getHeroInfo(id)
 
             when(resp){
                 is WrapperResponse.Sucess -> {

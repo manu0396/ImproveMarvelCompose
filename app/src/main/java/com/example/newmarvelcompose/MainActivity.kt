@@ -9,18 +9,17 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.compose.navArgument
+import androidx.navigation.compose.*
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.wallet.*
 import com.example.newmarvelcompose.data.models.MarvelRoom
@@ -69,8 +68,34 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             val height = Resources.getSystem().displayMetrics.heightPixels
             val heightDp = convertPixelsToDp(px = height*(3/2), context = applicationContext)
+            val bottomBarState = rememberSaveable { mutableStateOf(true)} // Variable to manage visibility of the bottomBar
+            // Subscribe to navBackStackEntry, required to get current route
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            Log.d("nav", "navBackStackEntry?.destination?.route: ${navBackStackEntry?.destination?.route}")
+            when(navBackStackEntry?.destination?.route){
+
+                "list_screen" -> {
+                    Log.d("nav", "Entra en list_screen")
+                    bottomBarState.value = false
+                }
+                "bought_screen" ->{
+                    Log.d("nav", "Entra en bought_screen")
+                    bottomBarState.value = true
+                }
+                "detail_screen/{dominantColor}/{number}" ->{
+                    Log.d("nav", "Entra en detail_screen")
+                    bottomBarState.value = true
+                }
+            }
             Scaffold(
-                bottomBar = { BottomNavigationBar(heightBottomBar = heightDp/10,navController = navController) }
+                /**
+                 * Set Scaffold state to manage the visibility of the toolbar.
+                 */
+                bottomBar = { BottomNavigationBar(
+                    heightBottomBar = heightDp/10,
+                    navController = navController,
+                    bottomNavState = bottomBarState.value
+                ) }
                     ) {
                 NavigationGraph(navController)
             }
