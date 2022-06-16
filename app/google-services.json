@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "968978544958",
+    "project_id": "pokejetpackcompose",
+    "storage_bucket": "pokejetpackcompose.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:968978544958:android:57c8c5b8a5bd547c8dd46f",
+        "android_client_info": {
+          "package_name": "com.example.newmarvelcompose"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "968978544958-48kfb1a074prdkrr8an1tbc6tb79dtvr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCASDiaVbZBNv3coz-mSYzclou_bkDd9Dk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "968978544958-48kfb1a074prdkrr8an1tbc6tb79dtvr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:968978544958:android:1757bc379df159c78dd46f",
+        "android_client_info": {
+          "package_name": "com.plcoding.jetpackcomposepokedex"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "968978544958-j298efui4l116p6fs27fl22fpmunj80o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.plcoding.jetpackcomposepokedex",
+            "certificate_hash": "8eb4b1e71cfa43bb9ad2b315d7ed217cc0e2afeb"
+          }
+        },
+        {
+          "client_id": "968978544958-48kfb1a074prdkrr8an1tbc6tb79dtvr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCASDiaVbZBNv3coz-mSYzclou_bkDd9Dk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "968978544958-48kfb1a074prdkrr8an1tbc6tb79dtvr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
