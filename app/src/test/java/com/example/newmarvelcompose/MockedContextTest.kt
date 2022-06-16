@@ -9,7 +9,7 @@ import com.example.newmarvelcompose.data.remote.response.marvel.CharacterDataCon
 import com.example.newmarvelcompose.data.remote.response.marvel.CharacterResultResponse
 import com.example.newmarvelcompose.data.remote.response.marvel.ComicCharacterResponse
 import com.example.newmarvelcompose.data.remote.response.marvel.ThumbnailResponse
-import com.example.newmarvelcompose.domain.MarvelRepository
+import com.example.newmarvelcompose.domain.MarvelRepositoryImpl
 import com.example.newmarvelcompose.util.WrapperResponse
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
@@ -20,11 +20,11 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
-//TODO(): Test the repository
+//TODO(): Test the repositoryImpl
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
-class MarvelRepositoryTest {
+class MarvelRepositoryImplTest {
 
     @Mock
     private val mockApi = Mockito.mock(MarvelApi::class.java)
@@ -32,7 +32,7 @@ class MarvelRepositoryTest {
     @Mock
     private val mockDao = Mockito.mock(MarvelDAO::class.java)
 
-    private lateinit var repository: MarvelRepository
+    private lateinit var repositoryImpl: MarvelRepositoryImpl
 
     private val hero = CharacterResultResponse(
         code = 200,
@@ -71,7 +71,7 @@ class MarvelRepositoryTest {
     @Before
     fun setup(){
         MockitoAnnotations.openMocks(this)
-        repository = MarvelRepository(mockApi)
+        repositoryImpl = MarvelRepositoryImpl(mockApi)
     }
 
     @Test
@@ -81,7 +81,7 @@ class MarvelRepositoryTest {
         Mockito.`when`(mockDao.selectHeroBought()).thenReturn(listOf())
         Mockito.`when`(mockApi.getCharacters(20, 20)).thenReturn(hero)
 
-        val result = repository.getHeroList(20, 20) as WrapperResponse.Sucess<List<CharacterResultResponse>>
+        val result = repositoryImpl.getHeroList(20, 20) as WrapperResponse.Sucess<List<CharacterResultResponse>>
 
         Assert.assertEquals(1, result.data?.size)
         Assert.assertEquals(hero.dataResponse.results[0].name, result.data?.get(0)?.dataResponse!!.results[0].name)

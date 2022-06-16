@@ -6,6 +6,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -15,15 +16,21 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 
 
 @Composable
-fun BottomNavigationBar(heightBottomBar: Int, navController: NavController) {
+fun BottomNavigationBar(heightBottomBar: Int, navController: NavController, bottomNavState: Boolean) {
 
     val items = listOf(
             BottomNavItem.ListScreen,
             BottomNavItem.BoughtScreen
         )
-
+    var visibility = if(bottomNavState){
+        1f
+    }else{
+        0f
+    }
     BottomNavigation(
-        Modifier.height(heightBottomBar.dp),
+        Modifier
+            .height(heightBottomBar.dp)
+            .alpha(visibility),
         backgroundColor = MaterialTheme.colors.background,
         contentColor = Color.White)
     {
