@@ -3,7 +3,6 @@ package com.example.newmarvelcompose.ui.herolist
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
@@ -11,7 +10,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.palette.graphics.Palette
 import com.example.newmarvelcompose.data.models.MarvelListModel
 import com.example.newmarvelcompose.data.remote.mapper.MarvelMapper
-import com.example.newmarvelcompose.repository.MarvelRepository
+import com.example.newmarvelcompose.domain.MarvelRepository
 import com.example.newmarvelcompose.util.Constants.PAGE_SIZE
 import com.example.newmarvelcompose.util.WrapperResponse
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -1,4 +1,4 @@
-package com.example.newmarvelcompose.repository
+package com.example.newmarvelcompose.domain
 
 import com.example.newmarvelcompose.data.remote.MarvelApi
 import com.example.newmarvelcompose.data.remote.response.marvel.CharacterDataContainerResponse

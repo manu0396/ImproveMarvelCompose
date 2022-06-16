@@ -2,7 +2,7 @@ package com.example.newmarvelcompose
 
 import androidx.lifecycle.ViewModel
 import com.example.newmarvelcompose.data.models.MarvelRoom
-import com.example.newmarvelcompose.repository.LocalRepository
+import com.example.newmarvelcompose.domain.LocalRepository
 import com.example.newmarvelcompose.util.WrapperResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

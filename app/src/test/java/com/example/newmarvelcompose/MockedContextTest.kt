@@ -1,7 +1,5 @@
 package com.example.newmarvelcompose
 
-import android.content.Context
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.example.newmarvelcompose.data.local.MarvelDAO
@@ -11,24 +9,16 @@ import com.example.newmarvelcompose.data.remote.response.marvel.CharacterDataCon
 import com.example.newmarvelcompose.data.remote.response.marvel.CharacterResultResponse
 import com.example.newmarvelcompose.data.remote.response.marvel.ComicCharacterResponse
 import com.example.newmarvelcompose.data.remote.response.marvel.ThumbnailResponse
-import com.example.newmarvelcompose.repository.MarvelRepository
-import com.example.newmarvelcompose.repository.MarvelRepository_Factory
+import com.example.newmarvelcompose.domain.MarvelRepository
 import com.example.newmarvelcompose.util.WrapperResponse
-import com.example.newmarvelcompose.util.convertPixelsToDp
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
-import org.mockito.junit.MockitoJUnitRunner
-import org.mockito.kotlin.any
-import org.mockito.kotlin.doReturn
-import org.mockito.kotlin.mock
-import retrofit2.Response
 
 //TODO(): Test the repository
 
