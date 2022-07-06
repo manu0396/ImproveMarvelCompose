@@ -70,13 +70,9 @@ fun HeroListScreen(
                 hint = "Search...",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
-
-            ) {
-
-                viewModel.searchheroList(it)
-
-            }
+                    .padding(16.dp),
+                viewModel = viewModel
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
             HeroList(navController = navController,
@@ -92,7 +88,8 @@ fun HeroListScreen(
 fun SearchBar(
     modifier: Modifier = Modifier,
     hint: String = " ",
-    onSearch: (String) -> Unit = { }
+    onSearch: (String) -> Unit = { },
+    viewModel: HeroListViewModel,
 ) {
 
     var text by remember {
@@ -130,7 +127,11 @@ fun SearchBar(
 
             )
         }
-
+        if(!isHintDisplayed && text != ""){
+            LaunchedEffect(key1 = text){
+                viewModel.searchheroList(text)
+            }
+        }
     }
 }
 
