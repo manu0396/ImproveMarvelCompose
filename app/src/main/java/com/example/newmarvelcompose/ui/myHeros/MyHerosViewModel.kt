@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.palette.graphics.Palette
 import com.example.newmarvelcompose.data.local.RoomResponse
+import com.example.newmarvelcompose.domain.LocalRepository
 import com.example.newmarvelcompose.domain.LocalRepositoryImpl
 import com.example.newmarvelcompose.util.WrapperResponse
 import dagger.hilt.android.lifecycle.HiltViewModel

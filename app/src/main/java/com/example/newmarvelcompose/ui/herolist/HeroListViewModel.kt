@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.palette.graphics.Palette
 import com.example.newmarvelcompose.data.models.MarvelListModel
 import com.example.newmarvelcompose.data.remote.mapper.MarvelMapper
+import com.example.newmarvelcompose.domain.MarvelRepository
 import com.example.newmarvelcompose.domain.MarvelRepositoryImpl
 import com.example.newmarvelcompose.util.Constants.PAGE_SIZE
 import com.example.newmarvelcompose.util.WrapperResponse

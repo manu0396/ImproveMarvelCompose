@@ -19,9 +19,4 @@ interface MarvelApi {
         @Path("characterId") characterId: Long
     ): CharacterResultResponse
 
-    @GET("v1/public/comics")
-    suspend fun fetchComics(
-        @Query("characters") characterId: Long
-    ): ComicDataWrapperResponse
-
 }

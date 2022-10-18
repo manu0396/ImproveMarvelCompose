@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.newmarvelcompose.data.models.MarvelListModel
 import com.example.newmarvelcompose.data.remote.mapper.MarvelMapper
+import com.example.newmarvelcompose.domain.MarvelRepository
 import com.example.newmarvelcompose.util.WrapperResponse
 import com.example.newmarvelcompose.domain.MarvelRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel

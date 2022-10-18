@@ -59,115 +59,119 @@ fun HeroDetailScreen(
     }
     val heroInfo by viewModel.hero.collectAsState()
 
-   val isLoading by viewModel.isLoading.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
 
-   val loadError by viewModel.loadError.collectAsState()
+    val loadError by viewModel.loadError.collectAsState()
 
     val height = Resources.getSystem().displayMetrics.heightPixels
     val width = Resources.getSystem().displayMetrics.widthPixels
 
-    if(isLoading){
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxSize()
-        ) {
-            CircularProgressIndicator(
-                color = MaterialTheme.colors.primary,
-                modifier = Modifier
-                    .fillMaxWidth(0.4f)
-                    .fillMaxHeight(0.4f)
-                    .align(Alignment.Center)
-            )
-        }
-    }else if(loadError!=""){
-        Text(
-            text = "Se ha producido un error",
-            color = Color.Red,
-            textAlign = TextAlign.Center
-        )
-    }else{
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    Brush.verticalGradient(
-                        listOf(
-                            Color.Black,
-                            Color.Transparent
-                        )
-                    )
-                )
-                .padding(bottom = 16.dp)
-        ) {
-
-            HeroDetailTopSection(
-                activity = activity,
-                navController = navController,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.2f)
-                    .align(Alignment.TopCenter),
-                context = context,
-                viewModel = viewModel,
-                heroInfo = heroInfo[0],
-                heroNumber = heroNumber.toInt()
-            )
-            Spacer(
-                modifier = Modifier
-                    .size(1.dp, 80.dp)
-                    .background(Color.LightGray)
-            )
-            HeroDetailStateWrapper(
-                heroInfo = heroInfo[0],
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(
-                        top = topPadding + heroImageSize / 2f,
-                        start = 16.dp,
-                        end = 16.dp,
-                        bottom = 16.dp
-                    )
-                    .shadow(10.dp, RoundedCornerShape(10.dp))
-                    .clip(RoundedCornerShape(10.dp))
-                    .background(MaterialTheme.colors.surface)
-                    .padding(16.dp)
-                    .align(Alignment.BottomCenter),
-                loadingModifier = Modifier
-                    .size(100.dp)
-                    .align(Alignment.Center)
-                    .padding(
-                        top = topPadding + heroImageSize / 2f,
-                        start = 16.dp,
-                        end = 16.dp,
-                        bottom = 16.dp
-                    )
-            )
+    when {
+        isLoading -> {
             Box(
                 contentAlignment = Alignment.Center,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                CircularProgressIndicator(
+                    color = MaterialTheme.colors.primary,
+                    modifier = Modifier
+                        .fillMaxWidth(0.4f)
+                        .fillMaxHeight(0.4f)
+                        .align(Alignment.Center)
+                )
+            }
+        }
+        loadError!="" -> {
+            Text(
+                text = "Se ha producido un error",
+                color = Color.Red,
+                textAlign = TextAlign.Center
+            )
+        }
+        else -> {
+            Box(
                 modifier = Modifier
                     .fillMaxSize()
+                    .background(
+                        Brush.verticalGradient(
+                            listOf(
+                                Color.Black,
+                                Color.Transparent
+                            )
+                        )
+                    )
+                    .padding(bottom = 16.dp)
             ) {
 
-                heroInfo[0].thumbnail.let {
-                    CoilImage(
-                        contentScale = ContentScale.Crop, // crop the image if it's not a square
-                        imageRequest = ImageRequest.Builder(LocalContext.current)
-                            .data("$it")
-                            .crossfade(true)
-                            .build(),
-                        imageLoader = {
-                            ImageLoader.Builder(LocalContext.current)
-                                .memoryCache(MemoryCache.Builder(LocalContext.current).maxSizePercent(0.25).build())
+                HeroDetailTopSection(
+                    activity = activity,
+                    navController = navController,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.2f)
+                        .align(Alignment.TopCenter),
+                    context = context,
+                    viewModel = viewModel,
+                    heroInfo = heroInfo[0],
+                    heroNumber = heroNumber.toInt()
+                )
+                Spacer(
+                    modifier = Modifier
+                        .size(1.dp, 80.dp)
+                        .background(Color.LightGray)
+                )
+                HeroDetailStateWrapper(
+                    heroInfo = heroInfo[0],
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(
+                            top = topPadding + heroImageSize / 2f,
+                            start = 16.dp,
+                            end = 16.dp,
+                            bottom = 16.dp
+                        )
+                        .shadow(10.dp, RoundedCornerShape(10.dp))
+                        .clip(RoundedCornerShape(10.dp))
+                        .background(MaterialTheme.colors.surface)
+                        .padding(16.dp)
+                        .align(Alignment.BottomCenter),
+                    loadingModifier = Modifier
+                        .size(100.dp)
+                        .align(Alignment.Center)
+                        .padding(
+                            top = topPadding + heroImageSize / 2f,
+                            start = 16.dp,
+                            end = 16.dp,
+                            bottom = 16.dp
+                        )
+                )
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
+
+                    heroInfo[0].thumbnail.let {
+                        CoilImage(
+                            contentScale = ContentScale.Crop, // crop the image if it's not a square
+                            imageRequest = ImageRequest.Builder(LocalContext.current)
+                                .data("$it")
                                 .crossfade(true)
-                                .build()
-                        },
-                        contentDescription = heroInfo[0].name,
-                        modifier = Modifier
-                            .size(heroImageSize)
-                            .offset(y = topPadding)
-                            .clip(CircleShape)    // clip to the circle shape
-                            .border(2.dp, Color.LightGray, CircleShape) // add a border
-                    )
+                                .build(),
+                            imageLoader = {
+                                ImageLoader.Builder(LocalContext.current)
+                                    .memoryCache(MemoryCache.Builder(LocalContext.current).maxSizePercent(0.25).build())
+                                    .crossfade(true)
+                                    .build()
+                            },
+                            contentDescription = heroInfo[0].name,
+                            modifier = Modifier
+                                .size(heroImageSize)
+                                .offset(y = topPadding)
+                                .clip(CircleShape)    // clip to the circle shape
+                                .border(2.dp, Color.LightGray, CircleShape) // add a border
+                        )
+                    }
                 }
             }
         }

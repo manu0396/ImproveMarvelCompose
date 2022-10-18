@@ -43,7 +43,6 @@ import com.example.newmarvelcompose.ui.theme.RobotoCondensed
 import com.example.newmarvelcompose.util.convertPixelsToDp
 import com.skydoves.landscapist.coil.CoilImage
 
-
 @Composable
 fun HeroListScreen(
     navController: NavController,
@@ -51,6 +50,7 @@ fun HeroListScreen(
     context: Context
 ) {
     val height = Resources.getSystem().displayMetrics.heightPixels
+
     Surface(
         color = MaterialTheme.colors.background,
         modifier = Modifier.fillMaxSize()
@@ -72,7 +72,10 @@ fun HeroListScreen(
                     .fillMaxWidth()
                     .padding(16.dp),
                 viewModel = viewModel
-            )
+            ){
+                //Here is where we define the function pass as argument: onSearch
+              //viewModel.searchheroList(it)
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
             HeroList(navController = navController,
@@ -81,6 +84,7 @@ fun HeroListScreen(
 
         }
     }
+
 }
 
 
@@ -88,8 +92,8 @@ fun HeroListScreen(
 fun SearchBar(
     modifier: Modifier = Modifier,
     hint: String = " ",
-    onSearch: (String) -> Unit = { },
     viewModel: HeroListViewModel,
+    onSearch: (String) -> Unit
 ) {
 
     var text by remember {
@@ -104,7 +108,7 @@ fun SearchBar(
         BasicTextField(value = text,
             onValueChange = {
                 text = it
-                onSearch(it)
+                //onSearch(it)
             },
             maxLines = 1,
             singleLine = true,
@@ -213,7 +217,6 @@ fun HeroEntry(
                 )
             )
             .clickable {
-
                 navController.navigate(
                     "detail_screen/${dominantColor.toArgb()}/${model.id}"
                 )
@@ -352,4 +355,5 @@ fun LazyListState.OnBottomReached(
             }
     }
 }
+
 
