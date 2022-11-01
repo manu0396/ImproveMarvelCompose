@@ -1,5 +1,5 @@
 # ImproveMarvelCompose
-Improvement of existing App, which show an example of Marvel API, using Jetpack Compose as UI framework, request and keeping data from remote datasource into local datasource. Added pay with GooglePay
+Improvement of existing App, which show an example of Marvel API, using Jetpack Compose as UI framework. It's an standart requesting and keeping data from remote into local datasource App. Added pay with GooglePay
 
 Tecnologies:
 - Jetpack Compose
