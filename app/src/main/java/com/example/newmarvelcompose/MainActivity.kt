@@ -72,21 +72,17 @@ class MainActivity : ComponentActivity() {
             // Subscribe to navBackStackEntry, required to get current route
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             when(navBackStackEntry?.destination?.route){
-
-                "list_screen" -> {
+                Screens.List.route -> {
                     bottomBarState.value = false
                 }
-                "bought_screen" ->{
+                Screens.Bought.route ->{
                     bottomBarState.value = true
                 }
-                "detail_screen/{dominantColor}/{number}" ->{
+                Screens.Detail.route ->{
                     bottomBarState.value = true
                 }
             }
             Scaffold(
-                /**
-                 * Set Scaffold state to manage the visibility of the toolbar.
-                 */
                 bottomBar = { BottomNavigationBar(
                     heightBottomBar = heightDp/10,
                     navController = navController,
@@ -166,7 +162,7 @@ class MainActivity : ComponentActivity() {
         // Since loadPaymentData may show the UI asking the user to select a payment method, we use
         // AutoResolveHelper to wait for the user interacting with it. Once completed,
         // onActivityResult will be called with the result.
-        if (request != null) {
+        if (request.toJson().isNotEmpty()) {
             Log.d("payment", "resquest != null: ${request.toJson()}")
             AutoResolveHelper.resolveTask(
                 paymentsClient.loadPaymentData(request), this, LOAD_PAYMENT_DATA_REQUEST_CODE)

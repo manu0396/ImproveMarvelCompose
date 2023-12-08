@@ -11,7 +11,7 @@ import javax.inject.Singleton
 
 @Singleton
 class MarvelRepositoryImpl @Inject constructor(
-    private val api: MarvelApi
+    private val api: MarvelApi,
 ): MarvelRepository {
 
     override suspend fun getHeroList(limit:Int, offset:Int): WrapperResponse<CharacterDataContainerResponse> {
