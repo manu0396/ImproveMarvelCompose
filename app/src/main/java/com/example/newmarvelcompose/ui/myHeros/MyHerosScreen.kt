@@ -3,7 +3,6 @@ package com.example.newmarvelcompose.ui.myHeros
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -37,7 +36,8 @@ import coil.memory.MemoryCache
 import coil.request.ImageRequest
 import com.example.newmarvelcompose.R
 import com.example.newmarvelcompose.data.local.RoomResponse
-import com.example.newmarvelcompose.ui.herolist.RetrySection
+import com.example.newmarvelcompose.ui.components.commons.RetrySection
+import com.example.newmarvelcompose.ui.components.myHeros.HeroBoughtRow
 import com.example.newmarvelcompose.ui.theme.RobotoCondensed
 import com.example.newmarvelcompose.util.convertPixelsToDp
 import com.skydoves.landscapist.coil.CoilImage
@@ -143,7 +143,7 @@ private fun initEmptyList(context: Context, viewModel: MyHerosViewModel, loadErr
             )
         )
 
-        RetryLoad(error = loadError, onRetry = {viewModel.getHerosBought()}, text = "Load your hero's !")
+        RetrySection(error = loadError, onRetry = {viewModel.getHerosBought()}, text = "Load your hero's !")
         }
 
 
@@ -191,198 +191,6 @@ private fun initView(
             RetrySection(error = loadError) {
                 viewModel.getHerosBought()
             }
-        }
-    }
-}
-
-
-@Composable
-fun HeroBoughtRow(
-    rowIndex: Int,
-    entries: List<RoomResponse>,
-    navController: NavController,
-    viewModel: MyHerosViewModel
-) {
-    Column {
-        Row {
-
-            HeroRoomEntry(
-                entry = entries[rowIndex * 2],
-                navController = navController,
-                modifier = Modifier.weight(1f),
-                viewModel = viewModel
-            )
-
-            Spacer(modifier = Modifier.width(16.dp))
-
-            if (entries.size >= rowIndex * 2 + 2) {
-
-                HeroRoomEntry(
-                    entry = entries[(rowIndex * 2) + 1],
-                    navController = navController,
-                    modifier = Modifier.weight(1f),
-                    viewModel = viewModel
-                )
-            } else {
-                Spacer(modifier = Modifier.weight(1f))
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-    }
-
-}
-
-
-
-@OptIn(ExperimentalFoundationApi::class)
-@SuppressLint("LogNotTimber")
-@Composable
-fun HeroRoomEntry(
-    entry: RoomResponse,
-    navController: NavController,
-    modifier: Modifier = Modifier,
-    viewModel: MyHerosViewModel
-) {
-    val defaultDominantColor = MaterialTheme.colors.surface
-    var dominantColor by remember {
-        mutableStateOf(defaultDominantColor)
-    }
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = modifier
-            .shadow(5.dp, RoundedCornerShape(10.dp))
-            .clip(RoundedCornerShape(10.dp))
-            .aspectRatio(1f)
-            .background(
-                Brush.verticalGradient(
-                    listOf(dominantColor, defaultDominantColor)
-                )
-            )
-            .combinedClickable(
-                onClick = {
-                    navController.navigate(
-                        "detail_screen/${dominantColor.toArgb()}/${entry.numberId}"
-                    )
-                },
-                onLongClick = {
-                    viewModel.onOpenDialogClicked(entry.name)
-                },
-            )
-
-    ) {
-        val showDialogState: Boolean by viewModel.showDialog.collectAsState()
-        if(showDialogState){
-
-            SimpleAlertDialog(
-                hero = viewModel.heroToDelete.value,
-                show = showDialogState,
-                onConfirm = { viewModel.onDialogConfirm(viewModel.heroToDelete.value) },
-                onDismiss = viewModel::onDialogDismiss)
-        }
-
-        Column (
-            horizontalAlignment = Alignment.CenterHorizontally
-        ){
-            CoilImage(
-                imageRequest = ImageRequest.Builder(LocalContext.current)
-                    .data(entry.image)
-                    .target {
-                        viewModel.calcDominantColor(it) { color ->
-                            dominantColor = color
-                        }
-                    }.build(),
-                imageLoader = {
-                    ImageLoader.Builder(LocalContext.current)
-                        .memoryCache(MemoryCache.Builder(LocalContext.current).maxSizePercent(0.25).build())
-                        .crossfade(true)
-                        .build()
-                },
-                contentDescription = entry.name,
-                modifier = Modifier
-                    .size(120.dp)
-                    .align(Alignment.CenterHorizontally),
-                loading = {
-                    ConstraintLayout(
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        val indicator = createRef()
-                        CircularProgressIndicator(
-                            //Set constrains dynamically
-                            modifier = Modifier.constrainAs(indicator) {
-                                top.linkTo(parent.top)
-                                bottom.linkTo(parent.bottom)
-                                start.linkTo(parent.start)
-                                end.linkTo(parent.end)
-                            }
-                        )
-                    }
-                },
-                // shows an error text message when request failed.
-                failure = {
-                    Text(text = "image request failed.")
-                }
-            )
-
-            Text(
-                text = entry.name.split("(")[0],
-                fontFamily = RobotoCondensed,
-                fontSize = 20.sp,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.apply {
-                    fillMaxWidth()
-                    padding(start = 0.dp,top = 0.dp, bottom = 10.dp, end = 0.dp)
-                }
-            )
-        }
-
-    }
-}
-
-//At the begining is invisible and show when the user try to remove some hero.
-@Composable
-fun SimpleAlertDialog(
-    hero: String,
-    show: Boolean,
-    onConfirm: () -> Unit,
-    onDismiss: () -> Unit
-) {
-    if(show){
-        AlertDialog(
-            onDismissRequest = onDismiss,
-            confirmButton = {
-                TextButton(onClick = onConfirm)
-                { Text(text = "OK") }
-            },
-            dismissButton = {
-                TextButton(onClick = onDismiss)
-                { Text(text = "Cancel") }
-            },
-            title = { Text(text = "Remove") },
-            text = { Text(text = "Would you like to remove ${hero} from your hero's?") }
-        )
-    }
-}
-
-
-@Composable
-fun RetryLoad(
-    text: String,
-    error: String,
-    onRetry: () -> Unit,
-) {
-    Column(
-        modifier = Modifier.apply {
-            fillMaxWidth()
-            CenterHorizontally
-        }
-    ) {
-        Spacer(modifier = Modifier.height(8.dp))
-        Button(
-            onClick = { onRetry() },
-            modifier = Modifier.align(CenterHorizontally)
-        ) {
-            Text(text = text)
         }
     }
 }
