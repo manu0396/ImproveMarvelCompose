@@ -37,8 +37,8 @@ import coil.ImageLoader
 import coil.memory.MemoryCache
 import coil.request.ImageRequest
 import com.example.newmarvelcompose.data.local.RoomResponse
+import com.example.newmarvelcompose.ui.components.commons.SimpleAlertDialog
 import com.example.newmarvelcompose.ui.myHeros.MyHerosViewModel
-import com.example.newmarvelcompose.ui.myHeros.SimpleAlertDialog
 import com.example.newmarvelcompose.ui.theme.RobotoCondensed
 import com.skydoves.landscapist.coil.CoilImage
 
