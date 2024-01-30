@@ -2,15 +2,15 @@ package com.example.newmarvelcompose
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
-import com.example.newmarvelcompose.data.local.MarvelDAO
-import com.example.newmarvelcompose.data.local.RoomResponse
-import com.example.newmarvelcompose.data.remote.MarvelApi
-import com.example.newmarvelcompose.data.remote.response.marvel.CharacterDataContainerResponse
-import com.example.newmarvelcompose.data.remote.response.marvel.CharacterResultResponse
-import com.example.newmarvelcompose.data.remote.response.marvel.ComicCharacterResponse
-import com.example.newmarvelcompose.data.remote.response.marvel.ThumbnailResponse
-import com.example.newmarvelcompose.domain.MarvelRepositoryImpl
-import com.example.newmarvelcompose.util.WrapperResponse
+import manu.lucas.dev.data.local.MarvelDAO
+import manu.lucas.dev.data.local.RoomResponse
+import manu.lucas.dev.data.remote.MarvelApi
+import manu.lucas.dev.data.remote.response.marvel.CharacterDataContainerResponse
+import manu.lucas.dev.data.remote.response.marvel.CharacterResultResponse
+import manu.lucas.dev.data.remote.response.marvel.ComicCharacterResponse
+import manu.lucas.dev.data.remote.response.marvel.ThumbnailResponse
+import manu.lucas.dev.domain.MarvelRepositoryImpl
+import manu.lucas.dev.util.WrapperResponse
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Before
